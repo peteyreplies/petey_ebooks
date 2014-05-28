@@ -3,7 +3,7 @@
 ##about
 These are two Ruby scripts I use to run Twitter _ebooks style bots. They are both based off [Buster Benson's code](https://gist.github.com/busterbenson/6695350), but more or less heavily modified to do other things his code didn't. 
 
-It requires Ruby, a few very basic/standard gems, [https://apps.twitter.com/app/new](Twitter API keys), and some kind of machine on which to run.  
+It requires Ruby, a few very basic/standard gems, [Twitter API keys](https://apps.twitter.com/app/new), and some kind of machine on which to run.  
 
 ##twitter_ebooks
 This script will scrape the last 3200 tweets from a user, clean them and uses MarkyMarkov to generate sentences, which will be pseudorandomly more or less lucid each time it runs. You should use it if you have a Twitter account (yours or someone else's) that you want to make an _ebooks version of. I use it to power [@grokbot_](http://twitter.com/grokbot_). 
