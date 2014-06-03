@@ -33,32 +33,36 @@ n = rand(1..3)
 markov = MarkyMarkov::TemporaryDictionary.new(n)
 markov.parse_file PATH_TO_TEXT
 
-#randomly select whether it generates 1 or 2 sentences (or just hardcode a number)
-#m = rand(1..2)
-tweet_text = markov.generate_n_sentences(1).split(/\#\</).first.chomp.chop
+#randomly select whether it generates 1 or 2 sentences, and generate them until you come in under 140
+under140 = false
 
-#make sure it's under 140
-trunc_tweet = tweet_text[0..139]
+begin
+  m = rand(1..2)
+  tweet_text = markov.generate_n_sentences(m).split(/\#\</).first.chomp.chop
+  if tweet_text.length <= 140 then
+  	under140 = true 
+  end
+end until under140 == true
   
 #D20 that the tweet will be all caps because LOUD NOISES
 d = rand(1..20)
 if d == 20
-	trunc_tweet = trunc_tweet.upcase
+	tweet_text = tweet_text.upcase
 end 
 
 #markov.save_dictionary!
 markov.clear! # Clear the temporary dictionary because otherwise it's huge.
 
 #printing tweet locally
- puts trunc_tweet
+ puts tweet_text
 
 #append to archival csv w/ date and time 
 date = Time.now.strftime("%m/%d/%Y")
 time = Time.now.strftime('%H:%M"')
 CSV.open(ARCHIVED_TWEETS, "a") do |csv|
-  csv << [date, time, trunc_tweet]
+  csv << [date, time, tweet_text]
   # ...
 end
 
 #post to twitter (comment out to debug locally)
- client.update(trunc_tweet)
+ client.update(tweet_text)
